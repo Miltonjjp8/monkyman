@@ -5,6 +5,7 @@ using UnityEngine;
 public class EndGame : MonoBehaviour
 {
     AudioSource fuenteAudio;
+
     void Start()
     {
         fuenteAudio = GetComponent<AudioSource>();
@@ -13,6 +14,7 @@ public class EndGame : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         fuenteAudio.Play();
+        
     }
      void OnTriggerExit(Collider other)
     {

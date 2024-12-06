@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +5,13 @@ public class ControladorJuego : MonoBehaviour
 {
     [SerializeField] private float tiempoMaximo;
     [SerializeField] private Slider slider;
+    [SerializeField] private GameOver gameOver;
     private float tiempoActual;
-    private bool timepoActivado = false;
+    private bool tiempoActivado = false;
 
     private void Update()
     {
-        if (timepoActivado)
+        if (tiempoActivado)
         {
             CambiarContador();
         }
@@ -20,26 +19,29 @@ public class ControladorJuego : MonoBehaviour
 
     private void CambiarContador()
     {
-        
-
-        
         tiempoActual -= Time.deltaTime;
         if (tiempoActual >= 0)
         {
             slider.value = tiempoActual;
         }
-
-
-            if (tiempoActual <= 0)
+        else if (tiempoActual <= 0 && tiempoActivado)
         {
-            Debug.Log("Derrota");
+            Debug.Log("Derrota por tiempo");
             CambiarTemporizador(false);
+            if (gameOver != null)
+            {
+                gameOver.GameOverFin(); // Mostrar Game Over si el tiempo termina
+            }
+            else
+            {
+                Debug.LogError("No se ha asignado el script GameOver en ControladorJuego.");
+            }
         }
     }
 
     private void CambiarTemporizador(bool estado)
     {
-        timepoActivado = estado;
+        tiempoActivado = estado;
     }
 
     public void ActivarTemporizador()
@@ -53,5 +55,4 @@ public class ControladorJuego : MonoBehaviour
     {
         CambiarTemporizador(false);
     }
-
 }
